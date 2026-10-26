@@ -1,0 +1,835 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaScript Practice Lab</title>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 25px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #faf9f6;
+    color: #55545c;
+    line-height: 1.8;
+}
+header {
+    background: linear-gradient(135deg, #e6eee5, #f8e9e8);
+    color: #485b4d;
+    text-align: center;
+    padding: 55px 20px 35px;
+    border-bottom: 3px solid #e8d8d6;
+}
+header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+    color: #526657;
+}
+header p {
+    color: #9a858e;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+nav a {
+    text-decoration: none;
+    color: #657c68;
+    background-color: #faf9f6;
+    border: 1px solid #dce5d8;
+    border-radius: 25px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+nav a:hover {
+    background-color: #657c68;
+    color: #ffffff;
+    border-color: #657c68;
+}
+section {
+    width: 88%;
+    max-width: 1100px;
+    margin: 45px auto;
+    scroll-margin-top: 20px;
+}
+.section-heading {
+    color: #657c68;
+    font-size: 27px;
+    margin-bottom: 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e8d8d6;
+}
+
+section > p {
+    margin-bottom: 22px;
+    color: #77717a;
+}
+.question-grid,
+.questions-grid,
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+.question-card {
+    min-width: 0;
+    background-color: #ffffff;
+    padding: 25px;
+    border: 1px solid #eee9e5;
+    border-top: 4px solid #dcbfc8;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(120, 110, 110, 0.06);
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    overflow-wrap: anywhere;
+}
+.question-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 9px 22px rgba(120, 110, 110, 0.12);
+    border-color: #c6d8c3;
+    border-top-color: #718574;
+}
+.question-card:active {
+    border-color: #c79eac;
+    border-top-color: #98717e;
+}
+.question-card h2,
+.question-card h3 {
+    color: #657c68;
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+.question-card p {
+    margin-bottom: 12px;
+}
+.question-card ul,
+.question-card ol {
+    padding-left: 22px;
+    margin: 10px 0 14px;
+}
+.question-card li {
+    margin-bottom: 5px;
+}
+.question-card li::marker {
+    color: #c79eac;
+}
+.question-card pre {
+    background-color: #255c3e;
+    color: #e6eee5;
+    padding: 18px;
+    margin: 15px 0;
+    border: 1px solid #41584a;
+    border-left: 4px solid #c6d8c3;
+    border-radius: 9px;
+    overflow-x: auto;
+    line-height: 1.7;
+    font-size: 13px;
+    white-space: pre;
+}
+.question-card pre code {
+    background: transparent;
+    color: #e6eee5;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+.question-card p code,
+.question-card li code {
+    background-color: #f8eeee;
+    color: #98717e;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 0.92em;
+}
+.explanation {
+    background-color: #f3f5ef;
+    color: #617164;
+    border-left: 4px solid #c6d8c3;
+    border-radius: 8px;
+    padding: 13px 15px;
+    margin: 15px 0;
+    font-size: 14px;
+}
+.explanation p {
+    margin-bottom: 0;
+}
+.output {
+    background-color: #d4b2b2;
+    color: #806b74;
+    border-left: 4px solid #dcbfc8;
+    border-radius: 8px;
+    padding: 13px 15px;
+    margin-top: 14px;
+    font-size: 14px;
+}
+.output p {
+    margin-bottom: 0;
+}
+.output code {
+    color: #98717e;
+    font-weight: bold;
+}
+#arrays,
+#functions,
+#objects {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    width: 88%;
+    max-width: 1100px;
+    margin: 45px auto;
+    align-items: stretch;
+}
+#arrays > .section-heading,
+#functions > .section-heading,
+#objects > .section-heading {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+}
+#arrays > .question-card,
+#functions > .question-card,
+#objects > .question-card {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 28px;
+    background: #fffdfb;
+    border: 1px solid #eee9e5;
+    border-top: 4px solid #dcbfc8;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(120, 110, 110, 0.06);
+    transition: 0.3s ease;
+}
+#arrays > .question-card:hover,
+#functions > .question-card:hover,
+#objects > .question-card:hover {
+    transform: translateY(-4px);
+    border-color: #c6d8c3;
+    border-top-color: #718574;
+    box-shadow: 0 9px 22px rgba(120, 110, 110, 0.12);
+}
+.question-number {
+    display: inline-block;
+    color: #718574;
+    background: #edf3eb;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+}
+.question-card h3 {
+    color: #657c68;
+    font-size: 19px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+.question-card pre {
+    background: #263b32;
+    color: #e6eee5;
+    padding: 18px;
+    border-radius: 9px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-size: 13px;
+    line-height: 1.8;
+}
+.question-card pre code {
+    background: transparent;
+    color: #e6eee5;
+    padding: 0;
+}
+.explanation {
+    background: #f0f4ec;
+    border-left: 4px solid #c6d8c3;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 15px;
+}
+.explanation h4 {
+    color: #657c68;
+    margin-bottom: 6px;
+}
+.output {
+    background: #f8eeee;
+    border-left: 4px solid #dcbfc8;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 15px;
+}
+.output h4 {
+    color: #98717e;
+    margin-bottom: 6px;
+}
+.output pre {
+    background: transparent;
+    color: #806b74;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    white-space: pre-wrap;
+}
+@media (max-width: 750px) {
+    #arrays,
+    #functions,
+    #objects {
+        grid-template-columns: 1fr;
+        width: 90%;
+        gap: 20px;
+    }
+    #arrays > .section-heading,
+    #functions > .section-heading,
+    #objects > .section-heading {
+        grid-column: 1;
+    }
+    #arrays > .question-card,
+    #functions > .question-card,
+    #objects > .question-card {
+        padding: 22px;
+    }
+}
+.question-card {
+    min-width: 0;
+    background: #fffdfb;
+    padding: 28px;
+    border: 1px solid #eee9e5;
+    border-top: 4px solid #dcbfc8;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(120, 110, 110, 0.06);
+    transition: 0.3s ease;
+}
+.question-card:hover {
+    transform: translateY(-4px);
+    border-color: #c6d8c3;
+    border-top-color: #718574;
+    box-shadow: 0 9px 22px rgba(120, 110, 110, 0.12);
+}
+.question-card pre {
+    background: #263b32;
+    color: #e6eee5;
+    padding: 18px;
+    border-radius: 9px;
+    overflow-x: auto;
+}
+.how-to-check {
+    width: 88%;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    padding: 30px;
+    background-color: #fffdfb;
+    border: 1px solid #eee5e3;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(120, 110, 110, 0.06);
+}
+.how-to-check h2 {
+    color: #657c68;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.how-to-check > p {
+    margin-bottom: 20px;
+}
+.steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+.step {
+    padding: 20px;
+    background-color: #f3f5ef;
+    border-radius: 10px;
+    border-left: 4px solid #c6d8c3;
+}
+.step span {
+    display: inline-block;
+    color: #98717e;
+    background-color: #f8eeee;
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.step h3 {
+    color: #657c68;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+.step p {
+    font-size: 14px;
+}
+.how-to-check .note {
+    background-color: #f8eeee;
+    padding: 14px;
+    border-radius: 8px;
+    margin-top: 22px;
+    font-size: 14px;
+}
+footer {
+    background-color: #e8eee5;
+    color: #617164;
+    text-align: center;
+    padding: 25px 15px;
+    border-top: 1px solid #dce5d8;
+}
+footer p:first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+footer p:last-child {
+    font-size: 13px;
+    color: #8c858d;
+}
+@media (max-width: 750px) {
+    header {
+        padding: 40px 18px 30px;
+   }
+    header h1 {
+        font-size: 28px;
+    }
+    section {
+        width: 90%;
+        margin: 35px auto;
+    }
+    .question-grid,
+    .questions-grid,
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .question-card {
+        padding: 22px;
+    }
+    .question-card h2,
+    .question-card h3 {
+        font-size: 19px;
+    }
+    .section-heading {
+        font-size: 24px;
+    }
+    .question-card pre {
+        font-size: 12px;
+        padding: 14px;
+    }
+    nav {
+        gap: 8px;
+    }
+    nav a {
+        padding: 7px 13px;
+    }
+}
+</style>
+</head>
+<body>
+    <header>
+        <p class="subtitle">PROGRAMMING PRACTICE</p>
+        <h1>JavaScript Practice questions</h1>
+        <p>topic: Arrays, functions, and object </p>
+        <p>Learn. Practice. Understand.</p>
+        <nav>
+            <a href="#arrays">Arrays</a>
+            <a href="#functions">Functions</a>
+            <a href="#objects">Objects</a>
+        </nav>
+    </header>
+    <main>
+        <section class="intro">
+            <p class="tag">MY LEARNING JOURNEY</p>
+            <h2>JavaScript Fundamentals</h2>
+            <p>
+                A collection of practice questions with simple code
+                and short explanations to understand the basics of JavaScript.
+            </p>
+        </section>
+        <section id="arrays">
+            <div class="section-heading">
+                <span>01</span>
+                <div>
+                    <h2>Arrays</h2>
+                    <p>Store, access and manage multiple values.</p>
+                </div>
+            </div>
+            <article class="question-card">
+                <p class="question-number">QUESTION 01</p>
+                <h3>Create an array of five numbers and print all elements.</h3>
+                <pre><code>let numbers = [10, 20, 30, 40, 50];
+console.log(numbers[0]);
+console.log(numbers[1]);
+console.log(numbers[2]);
+console.log(numbers[3]);
+console.log(numbers[4]);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        An array stores multiple values in one variable.
+                        Each element has an index starting from 0.
+                        We use the index to print each number.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>10
+20 
+30
+40
+50</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 02</p>
+                <h3>Create an array of three fruits and print the first and last elements.</h3>
+
+                <pre><code>let fruits = ["apple", "banana", "mango"];
+
+console.log(fruits[0]);
+console.log(fruits[2]);</code></pre>
+
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The first fruit is at index 0, while the last fruit
+                        is at index 2. We access both using their indexes.
+                    </p>
+                </div>
+
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>apple
+mango</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 03</p>
+                <h3>Add "Mango" to the end of an array using push().</h3>
+                <pre><code>let fruits = ["apple", "banana"];
+fruits.push("Mango");
+console.log(fruits);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The push() method adds a new element to the end
+                        of an existing array.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>["apple", "banana", "Mango"]</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 04</p>
+                <h3>Find the length of an array.</h3>
+                <pre><code>let numberList = [10, 20, 30, 40, 50];
+console.log(numberList.length);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The length property returns the total number
+                        of elements in an array.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>5</pre>
+                </div>
+            </article>
+        </section>
+        <section id="functions">
+            <div class="section-heading">
+                <span>02</span>
+                <div>
+                    <h2>Functions</h2>
+                    <p>Reusable code that performs a task.</p>
+                </div>
+            </div>
+            <article class="question-card">
+                <p class="question-number">QUESTION 05</p>
+                <h3>Write a function that prints "Hello World".</h3>
+                <pre><code>function greet() {
+    console.log("Hello World");
+}
+greet();</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The function contains the code to print the message.
+                        Calling greet() runs the function.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Hello World</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 06</p>
+                <h3>Write a function that takes two numbers and prints their sum.</h3>
+                <pre><code>function add(a, b) {
+    console.log(a + b);
+}
+add(10, 20);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The parameters a and b receive the two numbers.
+                        The plus operator adds them together.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>30</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 07</p>
+                <h3>Write a function that takes a number and returns its square.</h3>
+                <pre><code>function square(number) {
+    return number * number;
+}
+console.log(square(5));</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        A number's square is the number multiplied by itself.
+                        return sends the calculated result back to the caller.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>25</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 08</p>
+                <h3>Write a function that checks whether a number is even or odd.</h3>
+                <pre><code>function checkNumber(num) {
+    if (num % 2 === 0) {
+        console.log("Even");
+    } else {
+        console.log("Odd");
+    }
+}
+
+checkNumber(6);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The remainder operator % checks the remainder
+                        after division by 2. A remainder of 0 means even;
+                        otherwise, the number is odd.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Even</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 09</p>
+                <h3>Write a function to find the largest of two numbers.</h3>
+                <pre><code>function findLargest(a, b) {
+    if (a > b) {
+        console.log(a);
+    } else {
+        console.log(b);
+    }
+}
+findLargest(15, 10);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The if condition compares both numbers.
+                        The larger number is printed.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>15</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 10</p>
+                <h3>Write a function that takes a name and prints a welcome message.</h3>
+                <pre><code>function welcome(name) {
+    console.log("Welcome " + name);
+}
+welcome("Ali");</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The name parameter receives "Ali".
+                        The plus operator joins the welcome message and name.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Welcome Ali</pre>
+                </div>
+            </article>
+        </section>
+        <section id="objects">
+            <div class="section-heading">
+                <span>03</span>
+                <div>
+                    <h2>Objects</h2>
+                    <p>Organize related information using properties.</p>
+                </div>
+            </div>
+            <article class="question-card">
+                <p class="question-number">QUESTION 11</p>
+                <h3>Create a student object and print all three properties.</h3>
+                <pre><code>let student = {
+    name: "Ali",
+    age: 18,
+    class: "12th"
+};
+console.log(student.name);
+console.log(student.age);
+console.log(student.class);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The object stores the student's name, age and class.
+                        Dot notation accesses each property.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Ali
+18
+12th</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 12</p>
+                <h3>Create a car object and print its brand.</h3>
+                <pre><code>let car = {
+    brand: "Toyota",
+    model: "Corolla",
+    color: "Black"
+};
+console.log(car.brand);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The car object stores three properties.
+                        car.brand accesses and prints the brand value.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Toyota</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 13</p>
+                <h3>Update the student's age to 20 and print it.</h3>
+                <pre><code>let student2 = {
+    name: "Ali",
+    age: 18
+};
+student2.age = 20;
+console.log(student2.age);</code></pre>
+                <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        Assigning 20 to student2.age updates the existing
+                        age property. The updated value is then printed.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>20</pre>
+                </div>
+            </article>
+            <article class="question-card">
+                <p class="question-number">QUESTION 14</p>
+                <h3>Create a student object with name and marks. Print both using a function.</h3>
+                <pre><code>let student3 = {
+    name: "Ali",
+    marks: 85
+};
+function printStudent() {
+    console.log(student3.name);
+    console.log(student3.marks);
+}
+printStudent();</code></pre>
+               <div class="explanation">
+                    <h4>How it works</h4>
+                    <p>
+                        The object stores the student's name and marks.
+                        The function accesses and prints both properties
+                        when it is called.
+                    </p>
+                </div>
+                <div class="output">
+                    <h4>Output</h4>
+                    <pre>Ali
+85</pre>
+                </div>
+            </article>
+        </section>
+    </main>
+    <section class="how-to-check">
+    <h2>How to Check the Result</h2>
+    <p>Follow these steps to check the output of the JavaScript programs:</p>
+    <div class="steps">
+        <div class="step">
+            <span>01</span>
+            <h3>Open the JavaScript File</h3>
+            <p>Open the JavaScript file in your code editor and make sure the code is saved.</p>
+        </div>
+        <div class="step">
+            <span>02</span>
+            <h3>Open the HTML Page</h3>
+            <p>Open the HTML file in Google Chrome or another web browser.</p>
+        </div>
+        <div class="step">
+            <span>03</span>
+            <h3>Open Developer Tools</h3>
+            <p>Right-click on the webpage and select Inspect.</p>
+        </div>
+        <div class="step">
+            <span>04</span>
+            <h3>Go to the Console</h3>
+            <p>Click the Console tab in Developer Tools to view the JavaScript output.</p>
+        </div>
+        <div class="step">
+            <span>05</span>
+            <h3>Check the Output</h3>
+            <p>Run the JavaScript program and check the result displayed in the Console.</p>
+        </div>
+    </div>
+    <p class="note">
+        Note: If the program uses prompt(), enter the requested value
+        when the popup appears. The result will be displayed in the Console.
+    </p>
+</section>
+
+<footer>
+    <p>JavaScript Practice Assignment</p>
+    <p>Variables • Operators • Conditional Statements</p>
+    <p>Keep Learning, Keep Practicing!</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
